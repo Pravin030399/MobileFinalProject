@@ -4,8 +4,9 @@ import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project1/Detail.dart';
-import 'package:project1/add_post.dart';
-import 'package:project1/cubit/name_cubit.dart';
+import 'package:project1/Create_post.dart';
+import 'package:project1/cubit/cubit_controller.dart';
+import 'package:project1/main.dart';
 
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -64,11 +65,23 @@ class _Home extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => NameCubit(),
+        create: (context) => cubit_controller(),
         child: Scaffold(
           backgroundColor: Colors.lightGreen,
             
             appBar: AppBar(
+              leading: IconButton (
+                 icon: Icon(Icons.logout_outlined), 
+                 onPressed: () { 
+                     Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => MyApp(),
+                    ));  /** Do something */ 
+                 },
+            ),
+                automaticallyImplyLeading: false,
+
               centerTitle: true,
               title: Text("ALL POSTS"),
               actions: [],
@@ -82,10 +95,10 @@ class _Home extends State<Home> {
                       builder: (_) => Add_post(channel: channel),
                     ));
               },
-              child: const Icon(Icons.add_a_photo_rounded),
+              child: const Icon(Icons.add_box),
               backgroundColor: Colors.green,
             ),
-            body: BlocBuilder<NameCubit, String>(
+            body: BlocBuilder<cubit_controller, String>(
               builder: (context, index) {
                 print(posts.length);
                 return ListView.builder(
@@ -94,6 +107,8 @@ class _Home extends State<Home> {
                       return Card(
                         
                         color: Colors.yellowAccent,
+                        shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0)),
                         elevation: 10.0,
                         child: InkWell(
                           onTap: () {

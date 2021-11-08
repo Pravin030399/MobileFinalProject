@@ -1,11 +1,11 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:convert';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project1/Home.dart';
-import 'package:project1/cubit/name_cubit.dart';
+import 'package:project1/cubit/cubit_controller.dart';
 import 'package:web_socket_channel/io.dart';
 
 
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
         ),
         home: BlocProvider(
-          create: (context) => NameCubit(),
+          create: (context) => cubit_controller(),
           child: MyHomePage(title: 'Flutter Capitalize'),
           
         ));
@@ -100,7 +100,7 @@ ScaffoldMessenger.of(context)
                                 duration: const Duration(seconds: 2),
                               ));                        } else {
                           context
-                                                    .read<NameCubit>()
+                                                    .read<cubit_controller>()
                                                     .login(user_Input,channel);
                           
                           Navigator.push(
@@ -124,15 +124,4 @@ ScaffoldMessenger.of(context)
   }
 }
 
-login() {
-  
-  channel.sink.add('{"type":"sign_in","data":{"name":"$user_Input"}}');
 
-  channel.stream.listen((message) {
-    final decodeMessage = jsonDecode(message);
-
-    print(decodeMessage);
-
-
-  });
-}

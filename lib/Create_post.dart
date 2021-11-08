@@ -1,17 +1,17 @@
-// ignore_for_file: non_constant_identifier_names, camel_case_types
 
-import 'package:form_field_validator/form_field_validator.dart';
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project1/cubit/name_cubit.dart';
+import 'package:project1/cubit/cubit_controller.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 @override
-class CreatePostPage extends StatelessWidget {
+class Create_post extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: BlocProvider(
-      create: (context) => NameCubit(),
+      create: (context) => cubit_controller(),
     ));
   }
 }
@@ -26,9 +26,6 @@ class Add_post extends StatefulWidget {
   }
 }
 
-TextEditingController title_Input = TextEditingController();
-TextEditingController desc_Input = TextEditingController();
-TextEditingController URL_Input = TextEditingController();
 
 class _Add_post extends State<Add_post> {
   GlobalKey<FormState> validkey = GlobalKey<FormState>();
@@ -37,19 +34,22 @@ class _Add_post extends State<Add_post> {
   WebSocketChannel channel;
   String title = '';
   String description = '';
-  String url = '';void checkConnect () async{
-    channel.stream.listen((event) { 
-      print(event);
-    });
-  } 
+  String url = '';
+  
   @override
   Widget build(BuildContext context) {
+       const primaryColor = Color(0xFF43A047);
+        
     return SafeArea(
+      
         child: Scaffold(
+          backgroundColor: Colors.yellow,
+          
+
       appBar: new AppBar(
         centerTitle: true,
         title: Text("ADD POST"),
-        backgroundColor: Colors.lightBlue,
+         backgroundColor: primaryColor
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -57,6 +57,20 @@ class _Add_post extends State<Add_post> {
           child: Container(
             padding: EdgeInsets.all(12.0),
             child: Card(
+              elevation: 20,
+              shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0)),
+
+      //         decoration: new BoxDecoration(
+      //         boxShadow: [
+      //           new BoxShadow(
+      //           color: Colors.black,
+      //           blurRadius: 20.0,
+      //     ),
+      //   ],
+      // ),
+              color: Colors.yellow,
+            
               child: Form(
                 key: validkey,
                 child: Column(
@@ -65,8 +79,10 @@ class _Add_post extends State<Add_post> {
                     SizedBox(height: 20.0),
            
                     TextFormField(
+                        
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
+
                           hintText: "Title:",
                         ),
                         onChanged: (String? value) {
@@ -76,17 +92,14 @@ class _Add_post extends State<Add_post> {
                             },
                           );
                         },
-                        validator: MultiValidator([
-                          RequiredValidator(
-                              errorText: "TITLE Column is Required"),
-                        ])),
+                      ),
 
                     SizedBox(height: 20.0),
 
                     TextFormField(
-                      controller: desc_Input,
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
+                                                border: OutlineInputBorder(),
+
                         hintText: "Description:",
                       ),
                       onChanged: (String? value) {
@@ -94,13 +107,11 @@ class _Add_post extends State<Add_post> {
                           description = value!;
                         });
                       },
-                      minLines: null,
                       maxLines: 5,
                     ),
                     SizedBox(height: 20.0),
 
                     TextFormField(
-                      controller: URL_Input,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: "Image url:",
@@ -110,7 +121,6 @@ class _Add_post extends State<Add_post> {
                           url = value!;
                         });
                       },
-                      minLines: null,
                       maxLines: 2,
                     ),
 
@@ -121,7 +131,7 @@ class _Add_post extends State<Add_post> {
                         style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 92, vertical: 10),
-                            primary: Colors.green,
+                            primary: Colors.black,
                             shape: const RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20))),
@@ -129,19 +139,10 @@ class _Add_post extends State<Add_post> {
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         onPressed: () async {
 
-                          if (title.isNotEmpty &&
-                              description.isNotEmpty &&
-                              url.isNotEmpty) {
                             channel.sink.add(
                                 '{"type": "create_post","data": {"title": "$title", "description": "$description", "image": "$url"}}');
-
-
-                            // });
-                            title = '';
-                            description = '';
-                            url = '';
-                          }
-                        }),
+ }
+                        ),
                     SizedBox(height: 20.0),
                   ],
                 ),
