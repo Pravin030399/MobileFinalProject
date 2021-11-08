@@ -3,9 +3,7 @@ import 'dart:convert';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:project1/About_us.dart';
 import 'package:project1/Detail.dart';
-import 'package:project1/Favourite.dart';
 import 'package:project1/add_post.dart';
 import 'package:project1/cubit/name_cubit.dart';
 
@@ -27,7 +25,6 @@ class _Home extends State<Home> {
   dynamic decodedMessage;
   String textID = "";
 
-  List _allpost = [];
   List posts = [];
   bool isFavorite = false;
   bool favouriteClicked = false;
@@ -40,7 +37,6 @@ class _Home extends State<Home> {
       decodedMessage = jsonDecode(results);
       if (decodedMessage['type'] == 'all_posts') {
         posts = decodedMessage['data']['posts'];
-        _allpost = posts;
       }
       setState(() {});
     });
@@ -70,49 +66,13 @@ class _Home extends State<Home> {
     return BlocProvider(
         create: (context) => NameCubit(),
         child: Scaffold(
-            drawer: Drawer(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(
-                        left: 10, right: 10, top: 5, bottom: 5),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black,
-                      ),
-                      color: Colors.amberAccent,
-                    ),
-                    height: 120,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextButton(
-                          onPressed: () async {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => About_us(),
-                                ));
-                          },
-                          child: Text('About Our App')),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.popAndPushNamed(context, '/');
-                          },
-                          child: Text('Log Out')),
-                    ],
-                  )
-                ],
-              ),
-            ),
+          backgroundColor: Colors.lightGreen,
+            
             appBar: AppBar(
               centerTitle: true,
               title: Text("ALL POSTS"),
               actions: [],
-              backgroundColor: Colors.lightBlue,
+              backgroundColor: Colors.green,
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () async {
@@ -122,7 +82,7 @@ class _Home extends State<Home> {
                       builder: (_) => Add_post(channel: channel),
                     ));
               },
-              child: const Icon(Icons.add),
+              child: const Icon(Icons.add_a_photo_rounded),
               backgroundColor: Colors.green,
             ),
             body: BlocBuilder<NameCubit, String>(
@@ -132,6 +92,8 @@ class _Home extends State<Home> {
                     itemCount: posts.length,
                     itemBuilder: (context, index) {
                       return Card(
+                        
+                        color: Colors.yellowAccent,
                         elevation: 10.0,
                         child: InkWell(
                           onTap: () {
@@ -148,17 +110,22 @@ class _Home extends State<Home> {
                             // Move to post details page
                           },
                           child: Container(
-                            padding: EdgeInsets.all(10.0),
-                            child: Row(children: [
-                              Image(
-                                image: NetworkImage(Uri.parse(
+                                                         padding:EdgeInsets.all(8),
+
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+
+                               CircleAvatar(
+                                 radius: 50.0,
+                                  backgroundImage: NetworkImage(Uri.parse(
                                                 posts[index]['image'])
                                             .isAbsolute &&
                                         posts[index].containsKey('image')
                                     ? '${posts[index]['image']}'
-                                    : 'https://www.freevector.com/uploads/vector/preview/31317/Revision_Freevector_Halloween-Festivity_Illustration_Mf0721.jpg'),
-                                height: 100,
-                                width: 100,
+                                    : 'https://scontent.fkul8-1.fna.fbcdn.net/v/t1.6435-9/149098093_436876477759911_208740524272399589_n.jpg?_nc_cat=100&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=VweEd71zZUQAX91Vm-I&_nc_ht=scontent.fkul8-1.fna&oh=5c953fc30bbbda3921d7b422ddd5bc72&oe=61ACFDE3'),
+                               
                               ),
                               Container(
                                   padding: const EdgeInsets.only(
@@ -213,7 +180,7 @@ class _Home extends State<Home> {
                                         Ink(
                                           child: IconButton(
                                             icon: const Icon(
-                                                Icons.delete_forever),
+                                                Icons.delete_forever_rounded),
                                             color: Colors.black,
                                             onPressed: () {
                                               textID = posts[index]["_id"];

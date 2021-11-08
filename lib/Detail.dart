@@ -13,12 +13,15 @@ class DetailsPage extends StatelessWidget {
   final String title;
   final String description;
   final String url;
-
+  
   @override
   Widget build(BuildContext context) {
+    const primaryColor = Color(0xFF43A047);
     return Scaffold(
-      appBar: AppBar(title: const Text('POST DETAILS'),centerTitle: true,),
-      body: ListView(
+      backgroundColor: Colors.yellow,
+      appBar: AppBar(title: const Text('POST DETAILS'),centerTitle: true, backgroundColor: primaryColor),
+      body: 
+      ListView(
         children: [
           Column(
             children: [
@@ -28,7 +31,7 @@ class DetailsPage extends StatelessWidget {
                 child: Image(
                   image: NetworkImage(Uri.parse(url).isAbsolute
                       ? url
-                      : 'https://www.freevector.com/uploads/vector/preview/31317/Revision_Freevector_Halloween-Festivity_Illustration_Mf0721.jpg'),
+                      : 'https://scontent.fkul8-1.fna.fbcdn.net/v/t1.6435-9/149098093_436876477759911_208740524272399589_n.jpg?_nc_cat=100&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=VweEd71zZUQAX91Vm-I&_nc_ht=scontent.fkul8-1.fna&oh=5c953fc30bbbda3921d7b422ddd5bc72&oe=61ACFDE3'),
                 ),
               ),
               Padding(
@@ -37,7 +40,7 @@ class DetailsPage extends StatelessWidget {
                   title,
                   style: const TextStyle(
                     fontSize: 40,
-                    color: Colors.pinkAccent,
+                    color: Colors.green,
                     fontWeight: FontWeight.w700,
                   ),
                 ),

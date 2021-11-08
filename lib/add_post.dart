@@ -1,10 +1,9 @@
-import 'dart:convert';
+// ignore_for_file: non_constant_identifier_names, camel_case_types
+
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project1/cubit/name_cubit.dart';
-import 'package:project1/main.dart';
-import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 @override
@@ -16,6 +15,7 @@ class CreatePostPage extends StatelessWidget {
     ));
   }
 }
+
 
 class Add_post extends StatefulWidget {
   Add_post({required this.channel, Key? key}) : super(key: key);
@@ -132,9 +132,7 @@ class _Add_post extends State<Add_post> {
                             textStyle: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         onPressed: () async {
-                          // context
-                          //                           .read<NameCubit>()
-                          //                           .Addpost(title, description, url, channel);
+
                           if (title.isNotEmpty &&
                               description.isNotEmpty &&
                               url.isNotEmpty) {
@@ -166,35 +164,3 @@ class _Add_post extends State<Add_post> {
   }
 }
 
-// Create() {
-//   final channel =
-//       IOWebSocketChannel.connect('ws://besquare-demo.herokuapp.com');
-//   channel.sink.add('{"type":"sign_in","data":{"name":"V"}}');
-
-//   channel.sink.add(
-//       '{"type": "create_post","data": {"title": "VJ", "description": "V", "image": "V"}}');
-// channel.sink.add('{"type":"get_posts"}');
-//   channel.stream.listen((message) {
-//     final decodeMessage = jsonDecode(message);
-
-//     print(decodeMessage);
-
-// // print(serverTimeAsEpoch);
-// // channel.sink.close();
-//   });
-// }
-
-// login() {
-//   final channel =
-//       IOWebSocketChannel.connect('ws://besquare-demo.herokuapp.com');
-//   channel.sink.add('{"type":"get_posts"}');
-
-//   channel.stream.listen((message) {
-//     final decodeMessage = jsonDecode(message);
-
-//     print(decodeMessage);
-
-// // print(serverTimeAsEpoch);
-// // channel.sink.close();
-//   });
-// }

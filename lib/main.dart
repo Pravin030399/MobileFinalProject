@@ -1,12 +1,13 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:form_field_validator/form_field_validator.dart';
 import 'package:project1/Home.dart';
 import 'package:project1/cubit/name_cubit.dart';
 import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/status.dart' as status;
+
 
 void main() {
   runApp(MyApp());
@@ -17,9 +18,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Flutter Demo',
+         theme: ThemeData(
+        primarySwatch: Colors.green,
+        ),
         home: BlocProvider(
           create: (context) => NameCubit(),
           child: MyHomePage(title: 'Flutter Capitalize'),
+          
         ));
   }
   
@@ -35,8 +40,8 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-// TextEditingController username_Input = TextEditingController();
-   String username_Input = '';
+
+   String user_Input = '';
 
 class _MyHomePageState extends State<MyHomePage> {
   final _formkey = GlobalKey<FormState>();
@@ -44,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlue,
+      backgroundColor: Colors.lightGreen,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: SingleChildScrollView(
@@ -55,10 +60,9 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Icon(
-                    Icons.people_alt,
-                    size: 80.0,
-                  ),
+                  Image(
+                  image: NetworkImage('https://pbs.twimg.com/profile_images/1350740688728694785/fgL1qg2O_400x400.jpg'),
+                ),
                   SizedBox(height: 20.0),
                   TextFormField(
                     decoration: InputDecoration(
@@ -66,22 +70,22 @@ class _MyHomePageState extends State<MyHomePage> {
                         labelStyle: TextStyle(
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                            color: Colors.black),
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.green))),
                           onChanged: (String? value) {
                                     setState(() {
-                                      username_Input = value!;
+                                      user_Input = value!;
                                     });
                                   },  
                   ),
                   SizedBox(height: 20.0),
                   ElevatedButton(
-                      child: Text('LOGIN'),
+                      child: Text('SIGN IN'),
                       style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
                               horizontal: 92, vertical: 10),
-                          primary: Colors.green,
+                          primary: Colors.black,
                           shape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
@@ -89,15 +93,15 @@ class _MyHomePageState extends State<MyHomePage> {
                               fontSize: 20, fontWeight: FontWeight.bold)),
                       onPressed: () async {
 
-                        if (username_Input.isEmpty) {
+                        if (user_Input.isEmpty) {
 ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
-                                content: Text("Fill all the textfield"),
+                                content: Text("Fill in username"),
                                 duration: const Duration(seconds: 2),
                               ));                        } else {
                           context
                                                     .read<NameCubit>()
-                                                    .login(username_Input,channel);
+                                                    .login(user_Input,channel);
                           
                           Navigator.push(
                               context,
@@ -122,7 +126,7 @@ ScaffoldMessenger.of(context)
 
 login() {
   
-  channel.sink.add('{"type":"sign_in","data":{"name":"$username_Input"}}');
+  channel.sink.add('{"type":"sign_in","data":{"name":"$user_Input"}}');
 
   channel.stream.listen((message) {
     final decodeMessage = jsonDecode(message);
