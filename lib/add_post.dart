@@ -63,10 +63,7 @@ class _Add_post extends State<Add_post> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(height: 20.0),
-                    ////////////TITLE
-                    ///
-                    ///
-
+           
                     TextFormField(
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -83,7 +80,7 @@ class _Add_post extends State<Add_post> {
                           RequiredValidator(
                               errorText: "TITLE Column is Required"),
                         ])),
-                    ////////// description
+
                     SizedBox(height: 20.0),
 
                     TextFormField(
@@ -102,7 +99,6 @@ class _Add_post extends State<Add_post> {
                     ),
                     SizedBox(height: 20.0),
 
-                    ////////URL
                     TextFormField(
                       controller: URL_Input,
                       decoration: InputDecoration(
@@ -138,13 +134,7 @@ class _Add_post extends State<Add_post> {
                               url.isNotEmpty) {
                             channel.sink.add(
                                 '{"type": "create_post","data": {"title": "$title", "description": "$description", "image": "$url"}}');
-//                           channel.stream.listen((message) {
-//                             final decodeMessage = jsonDecode(message);
 
-//                             print(decodeMessage);
-
-// // // print(serverTimeAsEpoch);
-// channel.sink.close();
 
                             // });
                             title = '';

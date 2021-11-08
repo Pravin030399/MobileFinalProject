@@ -19,6 +19,7 @@ class DetailsPage extends StatelessWidget {
     const primaryColor = Color(0xFF43A047);
     return Scaffold(
       backgroundColor: Colors.yellow,
+      
       appBar: AppBar(title: const Text('POST DETAILS'),centerTitle: true, backgroundColor: primaryColor),
       body: 
       ListView(

@@ -81,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   SizedBox(height: 20.0),
                   ElevatedButton(
-                      child: Text('SIGN IN'),
+                      child: Text('ENTER TO THE APP',textAlign: TextAlign.center,),
                       style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
                               horizontal: 92, vertical: 10),
@@ -133,7 +133,6 @@ login() {
 
     print(decodeMessage);
 
-// print(serverTimeAsEpoch);
-// channel.sink.close();
+
   });
 }
